@@ -3,7 +3,7 @@
 install.packages("pacman")
 library(pacman) # recordar si no esta instalado instalarlo antes
 
-# La funcion p_load verifica si no esta instalado primero lo instala y luego ya lo carga en un solo paso
+# La funcion p_load verifica si no esta instalado primero lo instala y luego ya lo carga el pkg en un solo paso
 pacman::p_load(
     rio,        # importación/exportación de múltiples tipos de datos
     here,       # ruta relativa de los archivos
@@ -18,3 +18,10 @@ pacman::p_load(
 base_cruda <- import( here("datos","base_usuario_encoprac2022.xlsx")) #cargamos la base cruda
 base_cruda
 str(base_cruda)
+
+# Graficando de consumo de alcohol
+table(base_cruda$GRUPO_EDAD_SEL, base_cruda$AL_05)
+
+ggplot(data = base_cruda, aes( x = GRUPO_EDAD_SEL, fill = as.factor(AL_05)) ) +
+  geom_bar(stat = "count", na.rm = F)
+
