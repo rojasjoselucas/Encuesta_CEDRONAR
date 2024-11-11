@@ -11,17 +11,22 @@ pacman::p_load(
     lubridate,  # trabajar con fechas
     epikit,     # función age_categories()
     tidyverse,  # gestión y visualización de datos
-    matchmaker  #
+    matchmaker,
+    corrplot#
     
   )
 
+# Importamos labase de datos
 base_cruda <- import( here("datos","base_usuario_encoprac2022.xlsx")) #cargamos la base cruda
 base_cruda
-str(base_cruda)
+str(base_cruda) # vemos como esta compuesta la base de datos
 
-# Graficando de consumo de alcohol
-table(base_cruda$GRUPO_EDAD_SEL, base_cruda$AL_05)
+str (clean_names(base_cruda))
 
-ggplot(data = base_cruda, aes( x = GRUPO_EDAD_SEL, fill = as.factor(AL_05)) ) +
-  geom_bar(stat = "count", na.rm = F)
+# Graficando de cat de consumo de alcohol por cat de edad
+
+ggplot(data = subset( base_cruda, !is.na(AL_05)), # con subset sacamos los NA de la base de datos
+       aes( x = GRUPO_EDAD_SEL, fill = as.factor(AL_05))) + 
+  geom_bar(stat = "count")
+
 
